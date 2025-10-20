@@ -24,4 +24,4 @@ coverage/
 .DS_Store
 *.swp
 .vscode/
-.idea/
+.idea/.env
