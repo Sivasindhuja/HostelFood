@@ -1,30 +1,43 @@
-import express from "express";
-// import router from "Router";
+import { Router } from "express";
 import pool from "../db.js";
-import {Router} from "express"
-const router =Router();
+import { verifyToken } from "../middleware/auth.js";
 
-router.post('/', async (req, res) => {
-  console.log('POST /feedback triggered');
-console.log('Request body:', req.body);
+const router = Router();
+
+// POST feedback (with user_id)
+router.post('/', verifyToken, async (req, res) => {
   const { day, time, rating, suggestion } = req.body;
+  const userId = req.user.id;
+
   try {
     const [result] = await pool.query(
-      'INSERT INTO feedback (day, time, rating, suggestion) VALUES (?, ?, ?, ?)',
-      [day, time, rating, suggestion]
+      'INSERT INTO feedback (day, time, rating, suggestion, user_id) VALUES (?, ?, ?, ?, ?)',
+      [day, time, rating, suggestion, userId]
     );
-    res.json({ id: result.insertId, day, time, rating, suggestion });
+
+    res.json({ id: result.insertId });
   } catch (err) {
-    res.status(500).json({ error: err.message });
     console.error('Error in POST /feedback:', err);
+    res.status(500).json({ error: err.message });
   }
 });
 
-// GET all feedback
-router.get('/', async (req, res) => {
+// GET feedback (role-based)
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM feedback ORDER BY submitted_at DESC');
+    let query;
+    let values = [];
+
+    if (req.user.role === "matron") {
+      query = 'SELECT * FROM feedback ORDER BY submitted_at DESC';
+    } else {
+      query = 'SELECT * FROM feedback WHERE user_id = ? ORDER BY submitted_at DESC';
+      values = [req.user.id];
+    }
+
+    const [rows] = await pool.query(query, values);
     res.json(rows);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
