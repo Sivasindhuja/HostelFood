@@ -1,7 +1,10 @@
+
 import express from "express";
 import cors from "cors";
 import feedbackroutes from "./routes/feedback.js"
+import authRoutes from "./routes/auth.js";
 
+app.use('/auth', authRoutes);
 const app=express();
 //middleware
 
