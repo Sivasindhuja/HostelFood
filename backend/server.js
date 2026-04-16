@@ -1,18 +1,19 @@
-
 import express from "express";
 import cors from "cors";
-import feedbackroutes from "./routes/feedback.js"
-import authRoutes from "./routes/auth.js";
 
-app.use('/auth', authRoutes);
-const app=express();
-//middleware
+import feedbackroutes from "./routes/feedback.js";
+import authRoutes from "./routes/auth.js";
+import complaintRoutes from "./routes/complaints.js";
+
+const app = express(); // ✅ FIRST
 
 app.use(express.json());
 app.use(cors());
-//use that route as middleware
-app.use('/feedback',feedbackroutes)
 
-app.listen(5000,()=>{
-    console.log("server running on port 5000");
-})
+app.use('/auth', authRoutes);
+app.use('/feedback', feedbackroutes);
+app.use('/complaints', complaintRoutes); // ✅ missing earlier
+
+app.listen(5000, () => {
+  console.log("server running on port 5000");
+});
