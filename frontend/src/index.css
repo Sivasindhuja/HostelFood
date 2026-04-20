@@ -1,37 +1,38 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BODY */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #fff;
+  background: #fff;
   color: #000;
-  margin: 0;
-  padding: 20px;
+  padding: 30px;
 }
 
-h2, h3 {
-  font-weight: 600;
+/* HEADINGS */
+h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
 }
 
-form {
-  border: 1px solid black;
-  padding: 20px;
-  margin-bottom: 20px;
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-input, textarea, select {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 8px;
-  border: 1px solid black;
-  background: white;
-  color: black;
-}
-
+/* BUTTONS */
 button {
-  padding: 8px 15px;
+  padding: 8px 16px;
   border: 1px solid black;
   background: black;
   color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 10px;
 }
 
 button:hover {
@@ -39,6 +40,70 @@ button:hover {
   color: black;
 }
 
-div {
+/* FORMS */
+form {
+  border: 1px solid black;
+  padding: 20px;
+  margin-bottom: 25px;
+  max-width: 500px;
+}
+
+/* INPUTS */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 15px 0;
+  border: 1px solid black;
+  font-size: 14px;
+}
+
+/* TEXTAREA */
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* DASHBOARD CONTAINER */
+.dashboard {
+  margin-bottom: 30px;
+}
+
+/* TABS */
+.tabs {
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background: white;
+  color: black;
+}
+
+.tabs button.active {
+  background: black;
+  color: white;
+}
+
+/* CARD LIST */
+.card {
+  border: 1px solid black;
+  padding: 15px;
   margin-bottom: 15px;
+}
+
+/* CARD TEXT */
+.card p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* LOGOUT BUTTON ALIGNMENT */
+.logout {
+  margin-bottom: 20px;
+}
+
+/* SMALL IMPROVEMENT */
+.container {
+  max-width: 800px;
 }

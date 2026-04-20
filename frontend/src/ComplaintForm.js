@@ -2,64 +2,44 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ComplaintForm = () => {
-  const [form, setForm] = useState({
-    name: '',
-    roomNumber: '',
-    complaint: ''
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [complaint, setComplaint] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token=localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+
     try {
-      await axios.post('http://localhost:5000/complaints', form, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      await axios.post(
+        'http://localhost:5000/complaints',
+        { complaint },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
+
       alert('Complaint submitted!');
-      setForm({ name: '', roomNumber: '', complaint: '' });
+      setComplaint("");
+
     } catch (err) {
-      console.error(err);
       alert('Error submitting complaint');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Hostel Complaint Form</h2>
-
-      <input
-        name="name"
-        placeholder="Your Name"
-        value={form.name}
-        onChange={handleChange}
-        required
-      />
-
-      <input
-        name="roomNumber"
-        placeholder="Room Number"
-        value={form.roomNumber}
-        onChange={handleChange}
-        required
-      />
+      <h2>Hostel Complaint</h2>
 
       <textarea
-        name="complaint"
         placeholder="Write your complaint"
-        value={form.complaint}
-        onChange={handleChange}
+        value={complaint}
+        onChange={(e) => setComplaint(e.target.value)}
         required
       />
 
-      <button type="submit">Submit Complaint</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
-
 export default ComplaintForm;

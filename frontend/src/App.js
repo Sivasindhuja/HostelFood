@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Login from "./Login";
-
-import FeedbackForm from './FeedbackForm';
-import ComplaintForm from './ComplaintForm';
+import FeedbackForm from "./FeedbackForm";
+import ComplaintForm from "./ComplaintForm";
 import ChangePassword from "./ChangePassword";
-import Dashboard from './Dashboard';
+import Dashboard from "./Dashboard";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(
@@ -23,8 +23,10 @@ function App() {
       {!loggedIn ? (
         <Login setLoggedIn={setLoggedIn} />
       ) : (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
+        <div className="container">
+          <button className="logout" onClick={handleLogout}>
+            Logout
+          </button>
 
           <Dashboard />
 
@@ -40,4 +42,5 @@ function App() {
     </>
   );
 }
+
 export default App;

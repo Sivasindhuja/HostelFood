@@ -40,10 +40,8 @@ router.post('/change-password', verifyToken, async (req, res) => {
   }
 });
 
-// LOGIN
-router.post('/login', async (req, res) => {
-  console.log("BODY:", req.body);
 
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -52,10 +50,7 @@ router.post('/login', async (req, res) => {
       [email]
     );
 
-    console.log("DB RESULT:", rows); // 👈 ADD
-
     if (rows.length === 0) {
-      console.log("User not found"); // 👈 ADD
       return res.status(400).json({ error: "User not found" });
     }
 
@@ -63,22 +58,19 @@ router.post('/login', async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log("Password match:", isMatch); // 👈 ADD
-
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid password" });
     }
 
     const token = jwt.sign(
       { id: user.id, role: user.role },
-      "secretkey",
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     res.json({ token, role: user.role });
 
   } catch (err) {
-    console.error("LOGIN ERROR:", err); // 👈 ADD
     res.status(500).json({ error: err.message });
   }
 });

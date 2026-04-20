@@ -3,9 +3,9 @@ import axios from "axios";
 
 const Login = ({ setLoggedIn }) => {
   const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
+  email: "",
+  password: ""
+});
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,7 +14,6 @@ const Login = ({ setLoggedIn }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log(form);
     try {
       const res = await axios.post(
         "http://localhost:5000/auth/login",
@@ -28,7 +27,6 @@ const Login = ({ setLoggedIn }) => {
 
     } catch (err) {
       alert("Login failed");
-      console.error(err);
     }
   };
 
@@ -37,12 +35,11 @@ const Login = ({ setLoggedIn }) => {
       <h2>Login</h2>
 
       <input
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-        required
-      />
-
+  name="email"
+  placeholder="Email"
+  onChange={handleChange}
+  required
+/>
       <input
         name="password"
         type="password"
